@@ -1,0 +1,171 @@
+Load libraries and data
+``` {r} 
+rm(list=ls())
+gc()
+# install.packages('tidyverse')
+library(tidyverse)
+# install.packages('janitor')
+library(janitor)
+# install.packages('tidycensus')
+library(tidycensus)
+# census_api_key("8ca27fc51762196a5aeff26a30f55f031661f2c0", install = TRUE, overwrite = TRUE)
+# readRenviron("~/.Renviron")
+# Sys.getenv("CENSUS_API_KEY")
+library(dplyr)
+library(purrr)
+setwd('/Users/joellevtov/Library/CloudStorage/OneDrive-JoelLev-Tov/Undergrad/JOUR364/housing costs')
+```
+
+This code will retrieve the ACS data we're concerned with.
+``` {r}
+# Define the years and locations
+years <- 2015:2023
+
+# Define a function to get ACS data for a specific year and geography
+get_acs_data <- function(year) {
+  bind_rows(
+    get_acs(geography = "us", table = "B25031", year = year, survey = "acs5") |> 
+        mutate(location = "United States"),
+    get_acs(geography = "state", table = "B25031", state = "MD", year = year, survey = "acs5") |> 
+        mutate(location = "Maryland"),
+    get_acs(geography = "place", table = "B25031", state = "MD", place = "College Park city", year = year, survey = "acs5") |> 
+        filter(str_detect(NAME, "College Park")) |> 
+        mutate(location = "College Park City") #this line is necessary because the package does not correctly retrieve only college park data, I don't understand why 
+  ) |> 
+  mutate(year = year)
+}
+
+# Retrieve ACS data for all specified years
+housing_costs <- map_dfr(years, get_acs_data)
+view(housing_costs)
+
+# Convert the estimate column to numeric and handle missing values
+housing_costs <- housing_costs |> 
+  mutate(estimate = as.numeric(estimate)) |> 
+  select(NAME, variable, estimate, year)
+view(housing_costs)
+
+housing_costs_filtered <- housing_costs |>  
+  pivot_wider(names_from = variable, values_from = estimate) |> 
+  rename(
+    avg_price = B25031_001,
+    no_bedroom = B25031_002,
+    one_bedroom = B25031_003,
+    two_bedrooms = B25031_004,
+    three_bedrooms = B25031_005,
+    four_bedrooms = B25031_006,
+    five_or_more_bedrooms = B25031_007
+  )
+housing_costs_filtered <- housing_costs_filtered |> 
+    arrange(NAME)
+# View the filtered and reshaped data
+view(housing_costs_filtered)
+```
+
+``` {r}
+inflation <- read_csv('cpi u 2014 to 2024.csv') |> 
+    clean_names() |> 
+    select(label, value) |> 
+    separate(label, into = c("year", "month"), sep = " ") |> 
+    rename(cpi_u=value) |> 
+    mutate(year = as.numeric(year))
+view(inflation)
+
+# Let's take the average of inflation per year.
+inflation_per_year <- inflation |> 
+    group_by(year) |> 
+    summarize(median_inflation = median(cpi_u))
+view(inflation_per_year)
+```
+Now we have an inflation factor for each year, which will help normalize the prices for the housing costs. We want to track the price change of apartments in the US, Maryland, Prince George's County, and College Park, adjusted for inflation.
+``` {r}
+inflation_adjusted_prices <- housing_costs_filtered |> 
+    left_join(inflation_per_year, join_by('year'))
+view(inflation_adjusted_prices)
+inflation_adjusted_prices <- inflation_adjusted_prices |> 
+    rename(avg_price_not_adjusted=avg_price)
+view(inflation_adjusted_prices)
+```
+Let's adjust the prices to account for inflation. Formula: New price = Price * (2023 inflation factor/inflation factor for concerned year). First, let's get the inflation factor we're going to be comparing it to, 2023's inflation.
+``` {r}
+cpi_benchmark <- inflation_per_year |> 
+    select(year, median_inflation) |> 
+    filter(year==2023) |> 
+    select(-year)
+cpi_benchmark <- as.numeric(cpi_benchmark$median_inflation)
+view(cpi_benchmark)
+```
+Now, the math.
+``` {r}
+inflation_adjusted_prices <- inflation_adjusted_prices |> 
+    mutate(price_adjusted=round(avg_price_not_adjusted * (cpi_benchmark/median_inflation), 2))
+view(inflation_adjusted_prices)
+inflation_adjusted_only <- inflation_adjusted_prices |> 
+    select(-median_inflation, -avg_price_not_adjusted) |> 
+    rename(avg_price_per_room_adjusted=price_adjusted) |> 
+    mutate(no_bedroom = as.character(no_bedroom)) |> 
+    relocate(avg_price_per_room_adjusted, .before=no_bedroom)
+view(inflation_adjusted_only)
+```
+
+Let's combine those rows back into the old dataset.
+
+``` {r}
+median_cost_only <- inflation_adjusted_only |> 
+    select(NAME, year, avg_price_per_room_adjusted) |> 
+    arrange(desc(avg_price_per_room_adjusted))
+view(median_cost_only)
+```
+
+``` {r}
+write_csv(inflation_adjusted_only, 'inflation_adjusted_prices.csv')
+```
+
+Let's export a version that has only College Park apartment prices.
+``` {r}
+cp_inflation_adjusted_only <- inflation_adjusted_only |> 
+    filter(region=="College Park")
+view(cp_inflation_adjusted_only)
+write_csv(cp_inflation_adjusted_only, 'cp_inflation_adjusted_prices.csv')
+```
+
+Now, let's deal with average income.
+``` {r}
+avg_income <- read_csv('average income college park.csv')
+avg_income <- avg_income |> 
+    clean_names() 
+view(avg_income)
+
+avg_income_inflation_adjusted <- avg_income |> 
+    left_join(inflation_per_year, join_by('year'))
+view(avg_income_inflation_adjusted)
+avg_income_inflation_adjusted <- avg_income_inflation_adjusted |> 
+    rename(earnings_not_adjusted=earnings)
+view(avg_income_inflation_adjusted)
+
+avg_income_inflation_adjusted <- avg_income_inflation_adjusted |> 
+    mutate(earnings_adjusted=round(earnings_not_adjusted * (cpi_benchmark/median_inflation), 2)) |> 
+    select(-median_inflation, -earnings_not_adjusted)
+view(avg_income_inflation_adjusted)
+write_csv(avg_income_inflation_adjusted, 'cp_income_inflation_adjusted.csv')
+```
+Given that, let's go back to the average rent. We made a median calculation for each year.
+``` {r}
+cp_inflation_adjusted_only_median <- cp_inflation_adjusted_only |> 
+    filter(bedrooms=="median")
+view(cp_inflation_adjusted_only_median)
+
+rent_pct_income <- cp_inflation_adjusted_only_median |> 
+    left_join(avg_income_inflation_adjusted, by = "year")
+view(rent_pct_income)
+
+rent_pct_income <- rent_pct_income |> 
+    mutate(percent_income_spent = round(((price_per_room_adjusted * 12) / earnings_adjusted) * 100, 0))
+view(rent_pct_income)
+
+rent_pct_income_for_export <- rent_pct_income |> 
+    select(-bedrooms, -price_per_room_adjusted, -earnings_adjusted)
+view(rent_pct_income_for_export)
+
+write_csv(rent_pct_income_for_export, 'housing_costs_pct_income.csv')
+```

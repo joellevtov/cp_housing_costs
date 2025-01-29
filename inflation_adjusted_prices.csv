@@ -1,0 +1,197 @@
+year,region,bedrooms,price_per_room_adjusted
+2015,College Park,0,1204.53
+2015,College Park,1,1572.18
+2015,College Park,2,1942.41
+2015,College Park,3,2148.09
+2015,College Park,4,1488.62
+2015,College Park,5,2797.28
+2015,College Park,median,1757.3
+2015,Maryland,0,1106.83
+2015,Maryland,1,1297.08
+2015,Maryland,2,1606.89
+2015,Maryland,3,1901.27
+2015,Maryland,4,2355.06
+2015,Maryland,5,2547.89
+2015,Maryland,median,1754.08
+2015,Prince George's County,0,1264.94
+2015,Prince George's County,1,1401.21
+2015,Prince George's County,2,1695.59
+2015,Prince George's County,3,2198.23
+2015,Prince George's County,4,2589.02
+2015,Prince George's County,5,2711.15
+2015,Prince George's County,median,1946.91
+2015,United States,0,2892.4
+2015,United States,1,1001.41
+2015,United States,2,1172.39
+2015,United States,3,1399.92
+2015,United States,4,1741.87
+2015,United States,5,1842.14
+2015,United States,median,1570.89
+2016,College Park,0,1916.85
+2016,College Park,1,1182.33
+2016,College Park,2,1701.19
+2016,College Park,3,1956.18
+2016,College Park,4,2081.77
+2016,College Park,5,1263.52
+2016,College Park,median,1809.02
+2016,Maryland,0,1137.93
+2016,Maryland,1,1319.34
+2016,Maryland,2,1623.8
+2016,Maryland,3,1915.58
+2016,Maryland,4,2336.75
+2016,Maryland,5,2543.54
+2016,Maryland,median,1769.69
+2016,Prince George's County,0,1282.55
+2016,Prince George's County,1,1420.83
+2016,Prince George's County,2,1720.22
+2016,Prince George's County,3,2190.87
+2016,Prince George's County,4,2573.98
+2016,Prince George's County,5,2732.56
+2016,Prince George's County,median,1955.55
+2016,United States,0,970.48
+2016,United States,1,1016.15
+2016,United States,2,1182.33
+2016,United States,3,1401.8
+2016,United States,4,1744.32
+2016,United States,5,1854.69
+2016,United States,median,1292.07
+2017,College Park,0,1132.45
+2017,College Park,1,1741.08
+2017,College Park,2,2133.94
+2017,College Park,3,1989.27
+2017,College Park,4,1346.97
+2017,College Park,5,3044.39
+2017,College Park,median,1865.17
+2017,Maryland,0,1181.09
+2017,Maryland,1,1350.71
+2017,Maryland,2,1651.28
+2017,Maryland,3,1953.1
+2017,Maryland,4,2349.71
+2017,Maryland,5,2589.17
+2017,Maryland,median,1802.19
+2017,Prince George's County,0,1341.98
+2017,Prince George's County,1,1441.75
+2017,Prince George's County,2,1747.31
+2017,Prince George's County,3,2181.34
+2017,Prince George's County,4,2545.51
+2017,Prince George's County,5,2762.53
+2017,Prince George's County,median,1964.33
+2017,United States,0,1001.49
+2017,United States,1,1042.65
+2017,United States,2,1202.29
+2017,United States,3,1413.07
+2017,United States,4,1759.78
+2017,United States,5,1882.01
+2017,United States,median,1307.68
+2018,College Park,0,1286.91
+2018,College Park,1,1553.75
+2018,College Park,2,2154.15
+2018,College Park,3,1912.78
+2018,College Park,4,1421.55
+2018,College Park,5,3177.86
+2018,College Park,median,1733.26
+2018,Maryland,0,1214.14
+2018,Maryland,1,1360.9
+2018,Maryland,2,1665.34
+2018,Maryland,3,1952.81
+2018,Maryland,4,2344.58
+2018,Maryland,5,2498.62
+2018,Maryland,median,1809.07
+2018,Prince George's County,0,1405.78
+2018,Prince George's County,1,1455.51
+2018,Prince George's County,2,1756.31
+2018,Prince George's County,3,2167.49
+2018,Prince George's County,4,2520.45
+2018,Prince George's County,5,2788.51
+2018,Prince George's County,median,1961.9
+2018,United States,0,1024.92
+2018,United States,1,1060.09
+2018,United States,2,1215.35
+2018,United States,3,1416.69
+2018,United States,4,1762.38
+2018,United States,5,1881.24
+2018,United States,median,1316.02
+2019,College Park,0,1132.96
+2019,College Park,1,1682.17
+2019,College Park,2,2156.32
+2019,College Park,3,1854.91
+2019,College Park,4,1186.57
+2019,College Park,5,3003.36
+2019,College Park,median,1768.54
+2019,Maryland,0,1254.48
+2019,Maryland,1,1367.66
+2019,Maryland,2,1683.36
+2019,Maryland,3,1960.94
+2019,Maryland,4,2357.66
+2019,Maryland,5,2456.54
+2019,Maryland,median,1822.15
+2019,Prince George's County,0,1421.27
+2019,Prince George's County,1,1482.02
+2019,Prince George's County,2,1787.01
+2019,Prince George's County,3,2178.96
+2019,Prince George's County,4,2532.78
+2019,Prince George's County,5,2743.65
+2019,Prince George's County,median,1982.99
+2019,United States,0,1056.72
+2019,United States,1,1085.31
+2019,United States,2,1243.76
+2019,United States,3,1426.03
+2019,United States,4,1772.71
+2019,United States,5,1890.65
+2019,United States,median,1334.89
+2020,College Park,0,1143.08
+2020,College Park,1,1508.78
+2020,College Park,2,2432.45
+2020,College Park,3,1850.88
+2020,College Park,4,1327.11
+2020,College Park,5,2788.7
+2020,College Park,median,1679.83
+2020,Maryland,0,1311.78
+2020,Maryland,1,1395.53
+2020,Maryland,2,1693.98
+2020,Maryland,3,1965.3
+2020,Maryland,4,2341.61
+2020,Maryland,5,2545.69
+2020,Maryland,median,1829.64
+2020,Prince George's County,0,1425.02
+2020,Prince George's County,1,1505.24
+2020,Prince George's County,2,1820.21
+2020,Prince George's County,3,2187.08
+2020,Prince George's County,4,2536.26
+2020,Prince George's County,5,2772.19
+2020,Prince George's County,median,2003.64
+2020,United States,0,1094.72
+2020,United States,1,1117.13
+2020,United States,2,1274.03
+2020,United States,3,1442.72
+2020,United States,4,1802.51
+2020,United States,5,1921.66
+2020,United States,median,1358.38
+2021,College Park,0,1114.63
+2021,College Park,1,1427.48
+2021,College Park,2,2351.48
+2021,College Park,3,2270.74
+2021,College Park,4,1233.49
+2021,College Park,5,2644.15
+2021,College Park,median,1849.11
+2021,Maryland,0,1329.92
+2021,Maryland,1,1398.33
+2021,Maryland,2,1713.43
+2021,Maryland,3,1935.46
+2021,Maryland,4,2315.59
+2021,Maryland,5,2514.07
+2021,Maryland,median,1824.45
+2021,Prince George's County,0,1446.55
+2021,Prince George's County,1,1507.1
+2021,Prince George's County,2,1861.45
+2021,Prince George's County,3,2154.12
+2021,Prince George's County,4,2488.28
+2021,Prince George's County,5,2722.65
+2021,Prince George's County,median,2007.78
+2021,United States,0,1119.11
+2021,United States,1,1131.45
+2021,United States,2,1289.56
+2021,United States,3,1458.88
+2021,United States,4,1816.59
+2021,United States,5,1942.18
+2021,United States,median,1374.22
